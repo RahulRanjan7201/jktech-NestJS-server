@@ -1,10 +1,10 @@
 import { Controller, Delete, Get, Request, UseGuards } from '@nestjs/common';
-import { Put } from '@nestjs/common/decorators';
+import { Post, Put } from '@nestjs/common/decorators';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('posts')
 export class PostsController {
-    constructor(private authService: AuthService) {}
+    constructor() {}
     @UseGuards(JwtAuthGuard)
   @Get('/')
   getPost(@Request() req) {
@@ -18,6 +18,7 @@ export class PostsController {
   @UseGuards(JwtAuthGuard)
   @Post('/')
   createPost(@Request() req) {
+    console.log(req)
     return req.user;
   }
   @UseGuards(JwtAuthGuard)

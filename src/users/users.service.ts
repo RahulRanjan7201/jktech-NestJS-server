@@ -5,20 +5,22 @@ export type User = any;
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
+  private users = [];
 
-  async findOne(username: string): Promise<User | undefined> {
+   findOne(username: string): User | undefined {
     return this.users.find((user) => user.username === username);
+  }
+   createOrUpdate(data: any): User | undefined {
+    if (this.users.find((user) => user.email === data.email)) {
+      this.removeUser(data.email);
+    }
+    console.log(data)
+    this.users.push(data);
+  }
+  removeUser(email: string) {
+    const index = this.users.findIndex(function (item) {
+      return item.email === email;
+    });
+    this.users.splice(index, 1);
   }
 }
